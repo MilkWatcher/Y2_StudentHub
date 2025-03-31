@@ -22,7 +22,7 @@ public class p1Login extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // padding
 
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 200))); // vertical spacing
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 100))); // vertical spacing
 
         // title
         JLabel titleLabel = new JLabel("Login to Student Hub", JLabel.CENTER);
@@ -85,7 +85,6 @@ public class p1Login extends JFrame {
                     if (userType != null) {
                         JOptionPane.showMessageDialog(p1Login.this, "Login successful!");
                         new p2Main(userType); // Pass userType to the dashboard
-                        dispose(); // Close the login window
                     } else {
                         JOptionPane.showMessageDialog(p1Login.this, "Unable to retrieve user type!", "Error", JOptionPane.ERROR_MESSAGE);
                     }

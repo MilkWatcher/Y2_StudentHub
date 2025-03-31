@@ -2,48 +2,112 @@
 // Description: GUI for viewing notes uploaded by professor
 // Permissions: Student, Professor
 // Status: WIP
+
+/*
+>retrieve notes from database
+>display notes to table (prob on like a list/array or somethin)
+>open file
+ */
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 
 public class p4ViewNotes extends JFrame {
+    private DefaultListModel<String> listModel;
+    private JList<String> notesList;
+
     public p4ViewNotes() {
-        // Window setup
+        // window setup
         super("View Notes");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 500);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
-        // Main panel
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding
+        // header panel
+        JLabel titleLabel = new JLabel("Available Notes", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        add(titleLabel, BorderLayout.NORTH);
 
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Vertical padding
+        // list to display notes (their path directories)
+        listModel = new DefaultListModel<>();
+        notesList = new JList<>(listModel);
+        JScrollPane scrollPane = new JScrollPane(notesList);
+        add(scrollPane, BorderLayout.CENTER);
 
-        // Title
-        JLabel welcomeLabel = new JLabel("View Notes Page", JLabel.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        mainPanel.add(welcomeLabel);
+        fetchNotes();
 
-        // Sample notes display (placeholder)
-        JTextArea notesArea = new JTextArea(10, 50);
-        notesArea.setEditable(false);
-        notesArea.setText("Your saved notes will appear here...");
+        // open file button
+        JButton openButton = new JButton("Open Note");
+        openButton.addActionListener(e -> openSelectedFile());
 
-        // Scroll pane for notes
-        JScrollPane scrollPane = new JScrollPane(notesArea);
-        mainPanel.add(scrollPane);
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(openButton);
+        add(bottomPanel, BorderLayout.SOUTH);
 
-        // Add panel to frame
-        add(mainPanel);
-
-        // Make the frame visible
         setVisible(true);
     }
 
+    // fetch notes from the database
+    private void fetchNotes() {
+        String query = "SELECT filePath FROM Notes";
+        listModel.clear();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            boolean hasNotes = false;
+            while (rs.next()) {
+                listModel.addElement(rs.getString("filePath"));
+                hasNotes = true;
+            }
+
+            if (!hasNotes) {
+                listModel.addElement("No notes available.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error fetching notes from the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+
+    // method to open the selected file
+    private void openSelectedFile() {
+        String selectedNote = notesList.getSelectedValue();
+        
+        // if no notes available/invalid
+        if (selectedNote == null || selectedNote.equals("No notes available.")) {
+            JOptionPane.showMessageDialog(this, "Please select a valid note to open.");
+            return;
+        }
+
+        // ensures selected note exists b4 attempting to open
+        File file = new File(selectedNote); // creates new file object that represents notes path
+        if (!file.exists()) { //file does not exist
+            JOptionPane.showMessageDialog(this, "The selected file does not exist.", "File Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // if file cant be opened
+        try {
+            Desktop.getDesktop().open(file); // attempt to open file
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error opening file: " + file.getName(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new p4ViewNotes());
+        SwingUtilities.invokeLater(p4ViewNotes::new);
     }
 }
-
-

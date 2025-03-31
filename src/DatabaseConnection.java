@@ -165,37 +165,43 @@ public class DatabaseConnection {
         return userType;
     }
 
-    // Main method for testing and adding sample data
-    public static void main(String[] args) {
-        try {
-            // Adding sample/test data
-            addUser("S001", "student1@example.com", "pass123", "Student");
-            addUser("P001", "professor1@example.com", "prof456", "Professor");
-            addCourse("Mathematics", "P001");
-            addGrade("S001", 1, 88.5f, "2025-03-11");
-            addNote(1, "P001", "Math Lecture 1", "Calculus Basics", "2025-03-11");
-            addTimetable(1, "Monday", "09:00", "11:00", "Room 101");
-            
-            String email = "student1@example.com";
-            String password = "pass123";
+   //verify login credentials and return user role
+    public static String loginUser(String email, String password) {
+        String userType = null;
+        String query = "SELECT role FROM Users WHERE email = ? AND password = ?";
 
-            String query = "SELECT role FROM Users WHERE email = ? AND password = ?";
-            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, email);
-                stmt.setString(2, password);
-                ResultSet resultSet = stmt.executeQuery();
-                if (resultSet.next()) {
-                    String userType = resultSet.getString("role");
-                    System.out.println("Login successful! User type: " + userType);
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            ResultSet resultSet = stmt.executeQuery();
 
-                    // Pass userType to p2Main
-                    new p2Main(userType);
-                } else {
-                    System.out.println("Invalid login credentials!");
-                }
+            if (resultSet.next()) {
+                userType = resultSet.getString("role");
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return userType;
+    }
+
+    // login functionality
+    public static void main(String[] args) {
+        String email = "professor1@example.com";
+        String password = "prof456";
+
+        String userType = loginUser(email, password);
+        if (userType != null) {
+            System.out.println("Login successful! User type: " + userType);
+            new p2Main(userType);
+        } else {
+            System.out.println("Invalid login credentials!");
         }
     }
 }
+
+/*
+    emails:                         passwords:
+    student@email.com       ~~      pass123
+    professor@email.com     ~~      prof456
+    admin@email.com         ~~      admin789
+*/
