@@ -132,19 +132,14 @@ public class DatabaseConnection {
         }
 
         // view timetable
-        public static void viewTimetable(int courseID) throws SQLException {
+        public static ResultSet viewTimetable(int courseID) throws SQLException {
             String query = "SELECT * FROM Timetable WHERE courseID = ?";
-            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, courseID);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    System.out.println("ID: " + rs.getInt("id") +
-                            ", Day: " + rs.getString("day") +
-                            ", Time: " + rs.getString("startTime") + " - " + rs.getString("endTime") +
-                            ", Location: " + rs.getString("location"));
-                }
-            }
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, courseID);
+            return stmt.executeQuery();
         }
+        
 
     // retrieve the usertype to be sent into dashboard
     public static String getUserType(String username) {

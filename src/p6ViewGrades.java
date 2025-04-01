@@ -12,6 +12,8 @@ issues:
     student can access another students grades if they have their student id, no privacy pretty much
     however this is the best way to execute view grades so that professors can view grades of a certain student
  
+notes:
+    fix sql/databaseconnection.java so that studentid must exist
  */
 import javax.swing.*;
 import java.awt.*;

@@ -27,7 +27,7 @@ public class p7UploadGrades extends JFrame {
 
     public p7UploadGrades() {
         setTitle("Upload Grades");
-        setSize(400, 300);
+        setSize(800, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(5, 2, 10, 10));
