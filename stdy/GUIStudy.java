@@ -1,4 +1,6 @@
 package stdy;
+// this program is just a compilation of code from the powerpoints
+// so i dont have to keep going back to the powerpoint
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
