@@ -1,14 +1,12 @@
 // Last Updated: Reanielle Broas C00296913
 // Description: GUI for students and professors to view their timetable
 // Permissions: Students, Professors
-// Status: WIP
+// Status: COMPLETE
 
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,6 +45,8 @@ public class p8ViewTimeTab extends JFrame {
         timetableTable = new JTable(tableModel);
         add(new JScrollPane(timetableTable), BorderLayout.CENTER);
         viewButton.addActionListener(e -> loadTimetable());
+
+        setVisible(true);
 
     }
 

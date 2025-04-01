@@ -1,7 +1,7 @@
 // Last Updated: Reanielle Broas C00296913
 // Description: GUI for a professor to upload their grades
 // Permissions: EXEC Professor
-// Status: WIP
+// Status: COMPLETE
 
 /*
 >Professor inputs:
@@ -16,9 +16,6 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -26,24 +23,30 @@ public class p7UploadGrades extends JFrame {
     private JTextField studentIDField, courseIDField, gradeField;
 
     public p7UploadGrades() {
+        // window setup
         setTitle("Upload Grades");
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(5, 2, 10, 10));
+        
+        // input fields
+            // input student id
+            add(new JLabel("Student ID:"));
+            studentIDField = new JTextField();
+            add(studentIDField);
 
-        add(new JLabel("Student ID:"));
-        studentIDField = new JTextField();
-        add(studentIDField);
+            // input course id
+            add(new JLabel("Course ID:"));
+            courseIDField = new JTextField();
+            add(courseIDField);
 
-        add(new JLabel("Course ID:"));
-        courseIDField = new JTextField();
-        add(courseIDField);
+            // input grade
+            add(new JLabel("Grade (0-100):"));
+            gradeField = new JTextField();
+            add(gradeField);
 
-        add(new JLabel("Grade (0-100):"));
-        gradeField = new JTextField();
-        add(gradeField);
-
+        // upload button
         JButton uploadButton = new JButton("Upload Grade");
         uploadButton.addActionListener(e -> uploadGrade());
         add(uploadButton);
@@ -78,6 +81,6 @@ public class p7UploadGrades extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(p7UploadGrades::new);
+        SwingUtilities.invokeLater(() -> new p7UploadGrades().setVisible(true));
     }
 }

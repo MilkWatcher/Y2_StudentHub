@@ -1,11 +1,9 @@
 // Last Updated: Reanielle Broas C00296913
 // Description: GUI for managing user permissions (student, professor, admin)
-// Status: WIP
+// Status: COMPLETE
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,6 +77,7 @@ public class p3ManageUserSys extends JFrame {
         refreshButton.addActionListener(e -> loadUsers());
 
         loadUsers();
+        setVisible(true);
     }
 
     // functionality for viewing users

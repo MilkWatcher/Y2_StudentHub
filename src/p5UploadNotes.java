@@ -134,7 +134,7 @@ public class p5UploadNotes extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new p5UploadNotes("P001")); // example professorID
+        SwingUtilities.invokeLater(() -> new p5UploadNotes("P001").setVisible(true)); // example professorID
     }
 }
 

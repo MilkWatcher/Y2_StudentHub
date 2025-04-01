@@ -1,7 +1,7 @@
 // Last Updated: Reanielle Broas C00296913
 // Description: GUI for viewing notes uploaded by professor
 // Permissions: Student, Professor
-// Status: WIP
+// Status: COMPLETE
 
 /*
 >retrieve notes from database
@@ -11,14 +11,11 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 
 public class p4ViewNotes extends JFrame {
     private DefaultListModel<String> listModel;
@@ -108,6 +105,6 @@ public class p4ViewNotes extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(p4ViewNotes::new);
+        SwingUtilities.invokeLater(() -> new p4ViewNotes().setVisible(true));
     }
 }

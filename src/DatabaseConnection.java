@@ -1,6 +1,6 @@
 // Last Updated: Reanielle Broas C00296913 @ 04-02-2025 1:45AM
 // Description: Java for connecting database to SQL along with all the CRUD code for each page
-// Status: COMPLETE
+// Status: WIP
 
 import java.sql.*;
 
@@ -76,6 +76,15 @@ public class DatabaseConnection {
                 stmt.executeUpdate();
             }
         }
+
+        // delete course
+        public static void deleteCourse(int courseID) throws SQLException {
+            String query = "DELETE FROM Courses WHERE courseID = ?";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, courseID);
+                stmt.executeUpdate();
+            }
+        }
         
 
 
@@ -104,18 +113,58 @@ public class DatabaseConnection {
             }
         }
 
-    // CRUD for notes into a course
-    public static void addNote(int courseID, String professorID, String title, String content, String uploadDate) throws SQLException {
-        String query = "INSERT INTO Notes (courseID, professorID, title, content, uploadDate) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, courseID);
-            stmt.setString(2, professorID);
-            stmt.setString(3, title);
-            stmt.setString(4, content);
-            stmt.setString(5, uploadDate);
-            stmt.executeUpdate();
+        // update grade
+        public static void updateGrade(int gradeID, float grade) throws SQLException {
+            String query = "UPDATE Grades SET grade = ? WHERE gradeID = ?";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setFloat(1, grade);
+                stmt.setInt(2, gradeID);
+                stmt.executeUpdate();
+            }
         }
-    }
+        
+        // delete grade
+        public static void deleteGrade(int gradeID) throws SQLException {
+            String query = "DELETE FROM Grades WHERE gradeID = ?";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, gradeID);
+                stmt.executeUpdate();
+            }
+        }
+
+    // CRUD for notes
+        // add notes
+        public static void addNote(int courseID, String professorID, String title, String content, String uploadDate) throws SQLException {
+            String query = "INSERT INTO Notes (courseID, professorID, title, content, uploadDate) VALUES (?, ?, ?, ?, ?)";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, courseID);
+                stmt.setString(2, professorID);
+                stmt.setString(3, title);
+                stmt.setString(4, content);
+                stmt.setString(5, uploadDate);
+                stmt.executeUpdate();
+            }
+        }
+
+        // update notes
+        public static void updateNote(int noteID, String title, String content) throws SQLException {
+            String query = "UPDATE Notes SET title = ?, content = ? WHERE noteID = ?";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, title);
+                stmt.setString(2, content);
+                stmt.setInt(3, noteID);
+                stmt.executeUpdate();
+            }
+        }
+        
+        // delete notes
+        public static void deleteNote(int noteID) throws SQLException {
+            String query = "DELETE FROM Notes WHERE noteID = ?";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, noteID);
+                stmt.executeUpdate();
+            }
+        }
 
     // CRUD for timetable
         // add timetable
@@ -139,7 +188,28 @@ public class DatabaseConnection {
             stmt.setInt(1, courseID);
             return stmt.executeQuery();
         }
-        
+
+        // update timetable
+        public static void updateTimetable(int timetableID, String day, String startTime, String endTime, String location) throws SQLException {
+            String query = "UPDATE Timetable SET day = ?, startTime = ?, endTime = ?, location = ? WHERE timetableID = ?";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, day);
+                stmt.setString(2, startTime);
+                stmt.setString(3, endTime);
+                stmt.setString(4, location);
+                stmt.setInt(5, timetableID);
+                stmt.executeUpdate();
+            }
+        }
+
+        // delete timetable
+        public static void deleteTimetable(int timetableID) throws SQLException {
+            String query = "DELETE FROM Timetable WHERE timetableID = ?";
+            try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, timetableID);
+                stmt.executeUpdate();
+            }
+        }
 
     // retrieve the usertype to be sent into dashboard
     public static String getUserType(String username) {
