@@ -25,31 +25,36 @@ public class p7UploadGrades extends JFrame {
     public p7UploadGrades() {
         // window setup
         setTitle("Upload Grades");
-        setSize(800, 500);
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(5, 2, 10, 10));
-        
+        setLayout(new BorderLayout(10, 10));
+
+        // Main panel
+        JPanel mainPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding around the panel
+
         // input fields
-            // input student id
-            add(new JLabel("Student ID:"));
-            studentIDField = new JTextField();
-            add(studentIDField);
+        mainPanel.add(new JLabel("Student ID:"));
+        studentIDField = new JTextField();
+        mainPanel.add(studentIDField);
 
-            // input course id
-            add(new JLabel("Course ID:"));
-            courseIDField = new JTextField();
-            add(courseIDField);
+        mainPanel.add(new JLabel("Course ID:"));
+        courseIDField = new JTextField();
+        mainPanel.add(courseIDField);
 
-            // input grade
-            add(new JLabel("Grade (0-100):"));
-            gradeField = new JTextField();
-            add(gradeField);
+        mainPanel.add(new JLabel("Grade (0-100):"));
+        gradeField = new JTextField();
+        mainPanel.add(gradeField);
 
         // upload button
         JButton uploadButton = new JButton("Upload Grade");
         uploadButton.addActionListener(e -> uploadGrade());
-        add(uploadButton);
+        mainPanel.add(new JLabel()); // Empty space for alignment
+        mainPanel.add(uploadButton);
+
+        // Add main panel to the frame
+        add(mainPanel, BorderLayout.CENTER);
 
         setVisible(true);
     }

@@ -27,13 +27,18 @@ public class p2Main extends JFrame {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        headerPanel.setBackground(new Color(50, 50, 50));
 
         JLabel welcomeLabel = new JLabel("Welcome to Student Hub!", JLabel.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Larger, bolder font
+        welcomeLabel.setForeground(Color.WHITE); // White text for contrast
+        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center-align horizontally
         headerPanel.add(welcomeLabel);
 
         JLabel userLabel = new JLabel("User Type: " + userType, JLabel.CENTER);
-        userLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        userLabel.setFont(new Font("Arial", Font.ITALIC, 16)); // Italic for style
+        userLabel.setForeground(new Color(230, 230, 230)); // Light gray text
+        userLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center-align horizontally
         headerPanel.add(userLabel);
 
         add(headerPanel, BorderLayout.NORTH);
