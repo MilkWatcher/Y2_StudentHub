@@ -24,38 +24,49 @@ public class p3ManageUserSys extends JFrame {
 
         // table setup
         tableModel = new DefaultTableModel(new String[]{"User ID", "Email", "Role"}, 0);
-        /*
-        User ID         Email               Role
-        TestStudent     student@email.com   Student
-         */
         usersTable = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(usersTable);
         tableScrollPane.setBorder(BorderFactory.createTitledBorder("User List")); // Added a titled border
         add(tableScrollPane, BorderLayout.CENTER);
 
         // input panel
-        JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+        JPanel inputPanel = new JPanel(new GridBagLayout());
         inputPanel.setBorder(BorderFactory.createTitledBorder("User Details")); // Added a titled border
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Reduced spacing between components
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // input user id field
-        inputPanel.add(new JLabel("User ID:"));
-        userIDField = new JTextField();
-        inputPanel.add(userIDField);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        inputPanel.add(new JLabel("User ID:"), gbc);
+        gbc.gridx = 1;
+        userIDField = new JTextField(20);
+        inputPanel.add(userIDField, gbc);
 
         // input email field
-        inputPanel.add(new JLabel("Email:"));
-        emailField = new JTextField();
-        inputPanel.add(emailField);
+        gbc.gridx = 0;
+        gbc.gridy++;
+        inputPanel.add(new JLabel("Email:"), gbc);
+        gbc.gridx = 1;
+        emailField = new JTextField(20);
+        inputPanel.add(emailField, gbc);
 
         // input password field
-        inputPanel.add(new JLabel("Password:"));
-        passwordField = new JPasswordField();
-        inputPanel.add(passwordField);
+        gbc.gridx = 0;
+        gbc.gridy++;
+        inputPanel.add(new JLabel("Password:"), gbc);
+        gbc.gridx = 1;
+        passwordField = new JPasswordField(20);
+        inputPanel.add(passwordField, gbc);
 
         // input role (usertype) field
-        inputPanel.add(new JLabel("Role:"));
-        roleField = new JTextField();
-        inputPanel.add(roleField);
+        gbc.gridx = 0;
+        gbc.gridy++;
+        inputPanel.add(new JLabel("Role:"), gbc);
+        gbc.gridx = 1;
+        roleField = new JTextField(20);
+        inputPanel.add(roleField, gbc);
 
         add(inputPanel, BorderLayout.NORTH);
 

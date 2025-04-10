@@ -52,6 +52,10 @@ public class p7UploadGrades extends JFrame {
         uploadButton.addActionListener(e -> uploadGrade());
         mainPanel.add(new JLabel()); // Empty space for alignment
         mainPanel.add(uploadButton);
+        uploadButton.setBackground(new Color(34, 139, 34));
+        uploadButton.setForeground(Color.WHITE);
+        uploadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        uploadButton.setMaximumSize(new Dimension(100, 30)); // button size
 
         // Add main panel to the frame
         add(mainPanel, BorderLayout.CENTER);
